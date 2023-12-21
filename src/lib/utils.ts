@@ -25,3 +25,46 @@ export function formatPrice(
     maximumFractionDigits: 2,
   }).format(numericPrice);
 }
+
+export function constructMetadata({
+  title = 'XchangeSphere - the mordern marketplace for digital assets',
+  description = 'Step into the future of digital shopping and experience a platform designed for the modern consumer. Elevate your online journey with us.',
+  image = '/thumbnail.png',
+  icons = '/favicon.ico',
+  noIndex = false,
+}: {
+  title?: string
+  description?: string
+  image?: string
+  icons?: string
+  noIndex?: boolean
+} = {}): Metadata {
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [
+        {
+          url: image,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+      creator: '@ENDY_EPIQ',
+    },
+    icons,
+    metadataBase: new URL('https://github.com/imendy'),
+    ...(noIndex && {
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }),
+  }
+}
